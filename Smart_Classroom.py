@@ -14,14 +14,17 @@ if os.getenv("STREAMLIT_SERVER_MODE", "false") == "true":
     subprocess.run(["apt-get", "install", "-y", "portaudio19-dev", "libasound2-dev"])
     subprocess.run(["pip", "install", "sounddevice"])
 
+import sounddevice as sd
+import librosa
+
 import streamlit as st
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split
-import librosa
-import sounddevice as sd
+# import librosa
+# import sounddevice as sd
 import time
 from librosa.feature import rms, zero_crossing_rate
 
