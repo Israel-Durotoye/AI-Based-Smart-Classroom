@@ -1,3 +1,4 @@
+portaudio
 sounddevice
 numba
 llvmlite
