@@ -3,4 +3,5 @@ pandas
 numpy
 joblib
 gdown
+librosa
 scikit-learn
