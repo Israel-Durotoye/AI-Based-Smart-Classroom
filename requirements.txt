@@ -1,4 +1,7 @@
 sounddevice
+numba
+llvmlite
+audioread
 streamlit
 pandas
 numpy
