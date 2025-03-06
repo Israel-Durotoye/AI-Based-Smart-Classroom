@@ -1,3 +1,13 @@
+import os
+import subprocess
+
+# Ensure librosa is installed
+try:
+    import librosa
+except ImportError:
+    subprocess.run(["pip", "install", "librosa"])
+    import librosa
+
 import streamlit as st
 import numpy as np
 import pandas as pd
