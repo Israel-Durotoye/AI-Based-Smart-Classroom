@@ -8,11 +8,6 @@ except ImportError:
     subprocess.run(["pip", "install", "librosa"])
     import librosa
 
-# Ensure PortAudio is installed before importing sounddevice
-if os.getenv("STREAMLIT_SERVER_MODE", "false") == "true":
-    os.system("apt-get update && apt-get install -y portaudio19-dev libasound2-dev libportaudio2")
-    os.system("pip install sounddevice librosa")
-
 import sounddevice as sd
 import librosa
 
