@@ -8,6 +8,13 @@ except ImportError:
     subprocess.run(["pip", "install", "librosa"])
     import librosa
 
+# Ensure sounddevice is installed
+try:
+    import sounddevice
+except ImportError:
+    subprocess.run(["pip", "install", "sounddevice"])
+    import sounddevice
+
 import streamlit as st
 import numpy as np
 import pandas as pd
