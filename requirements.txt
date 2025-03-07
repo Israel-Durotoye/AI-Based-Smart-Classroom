@@ -9,3 +9,5 @@ joblib
 gdown
 librosa
 scikit-learn
+plotly
+matplotlib
