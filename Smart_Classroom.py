@@ -1,26 +1,15 @@
 import os
 import subprocess
 
-# Ensure librosa is installed
-try:
-    import librosa
-except ImportError:
-    subprocess.run(["pip", "install", "librosa"])
-    import librosa
-
-import sounddevice as sd
-import librosa
-
 import streamlit as st
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split
-# import librosa
-# import sounddevice as sd
+
 import time
-from librosa.feature import rms, zero_crossing_rate
+# from librosa.feature import rms, zero_crossing_rate
 
 import plotly.express as px
 import matplotlib.pyplot as plt
@@ -80,19 +69,17 @@ url1 = "https://drive.google.com/uc?export=download&id=1r_mzc2dDBb2BwFRKl3MITMKx
 output1 = "reg_model.pkl"
 gdown.download(url1, output1, quiet = False)
 
-url2 = "https://drive.google.com/uc?export=download&id=1acBiv_KIwfeEA8jmBSn3PulwCqMFTobQ"
-output2 = "clf_model.pkl"
-gdown.download(url2, output2, quiet = False)
+# url2 = "https://drive.google.com/uc?export=download&id=1acBiv_KIwfeEA8jmBSn3PulwCqMFTobQ"
+# output2 = "clf_model.pkl"
+# gdown.download(url2, output2, quiet = False)
 
-url3 = "https://drive.google.com/uc?export=download&id=1DXkeZxYBdYJGw2EtFEhsu4PbjTmX3C7F"
-output3 = "logistic_regression_model.pkl"
-gdown.download(url3, output3, quiet = False)
+# url3 = "https://drive.google.com/uc?export=download&id=1DXkeZxYBdYJGw2EtFEhsu4PbjTmX3C7F"
+# output3 = "logistic_regression_model.pkl"
+# gdown.download(url3, output3, quiet = False)
 
-url4 = "https://drive.google.com/uc?export=download&id=1UPA3Vj2p05ykhR9rAHOqU5KFwuZNtAQs"
-output4 = "label_encoders.pkl"
-gdown.download(url4, output4, quiet = False)
-
-url5 = ""
+# url4 = "https://drive.google.com/uc?export=download&id=1UPA3Vj2p05ykhR9rAHOqU5KFwuZNtAQs"
+# output4 = "label_encoders.pkl"
+# gdown.download(url4, output4, quiet = False)
 
 # Engagement Prediction (Classification Mode)
 if mode == "Students' Engagement":
