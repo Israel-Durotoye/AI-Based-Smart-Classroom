@@ -65,9 +65,14 @@ st.sidebar.header("🔍 AI-Classroom Mode")
 mode = st.sidebar.selectbox("Select a Classroom Simulation Mode", ["Students' Engagement", "Students' Attentiveness", "Students' Medical Status", "Classroom Audio Analysis"])
 
 import gdown
-url1 = "https://drive.google.com/uc?export=download&id=1r_mzc2dDBb2BwFRKl3MITMKxhl35CGie"
-output1 = "reg_model.pkl"
-gdown.download(url1, output1, quiet = False)
+
+# Define the file path
+model_path = "reg_model.pkl"
+
+# Check if the file already exists before downloading
+if not os.path.exists(model_path):
+    url1 = "https://drive.google.com/uc?export=download&id=1r_mzc2dDBb2BwFRKl3MITMKxhl35CGie"
+    gdown.download(url1, model_path, quiet=False)
 
 # url2 = "https://drive.google.com/uc?export=download&id=1acBiv_KIwfeEA8jmBSn3PulwCqMFTobQ"
 # output2 = "clf_model.pkl"
