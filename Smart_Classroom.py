@@ -307,83 +307,83 @@ else:
     start_button = st.button("▶ Start Recording", key='start_button')
     stop_button = st.button("⏹ Stop Recording", key='stop_button')
 
-    graph_area_rms = st.empty()
-    graph_area_zcr = st.empty()
-    volume_display = st.empty()
-    noise_level_display = st.empty()
+    # graph_area_rms = st.empty()
+    # graph_area_zcr = st.empty()
+    # volume_display = st.empty()
+    # noise_level_display = st.empty()
 
-    # Constants
-    DURATION = 3  # 3 seconds per recording
-    SAMPLERATE = 22050  # Standard sampling rate
-    FRAME_SIZE = 2048
-    HOP_LENGTH = 512
+    # # Constants
+    # DURATION = 3  # 3 seconds per recording
+    # SAMPLERATE = 22050  # Standard sampling rate
+    # FRAME_SIZE = 2048
+    # HOP_LENGTH = 512
 
-    # Function to record audio
-    def record_audio(duration, samplerate):
-        audio = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=1, dtype=np.float32)
-        sd.wait()
-        return audio.flatten()
+    # # Function to record audio
+    # def record_audio(duration, samplerate):
+    #     audio = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=1, dtype=np.float32)
+    #     sd.wait()
+    #     return audio.flatten()
 
-    # Function to extract features
-    def extract_features(audio, samplerate):
-        if np.max(audio) == 0:
-            return None, None, None, None, "No sound detected"
+    # # Function to extract features
+    # def extract_features(audio, samplerate):
+    #     if np.max(audio) == 0:
+    #         return None, None, None, None, "No sound detected"
         
-        rms_values = librosa.feature.rms(y=audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH).flatten()
-        zcr_values = librosa.feature.zero_crossing_rate(y=audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH).flatten()
-        rms_db = librosa.power_to_db(rms_values**2, ref=np.max)
-        total_rms = np.sqrt(np.mean(audio ** 2))
-        total_volume_db = 10 * np.log10(total_rms**2) if total_rms > 0 else -np.inf
+    #     rms_values = librosa.feature.rms(y=audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH).flatten()
+    #     zcr_values = librosa.feature.zero_crossing_rate(y=audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH).flatten()
+    #     rms_db = librosa.power_to_db(rms_values**2, ref=np.max)
+    #     total_rms = np.sqrt(np.mean(audio ** 2))
+    #     total_volume_db = 10 * np.log10(total_rms**2) if total_rms > 0 else -np.inf
 
-        # Noise Level Classification
-        if total_volume_db < -90:
-            noise_label = "The class is very Quiet 🔵"
-        elif -90 <= total_volume_db < -70:
-            noise_label = "The class is Quiet 🟢"
-        elif -70 <= total_volume_db < -60:
-            noise_label = "The class has Moderate Noise 🟡"
-        elif -60 <= total_volume_db < -50:
-            noise_label = "The class is Loud 🟠"
-        else:
-            noise_label = "The class is very Loud 🔴"
+    #     # Noise Level Classification
+    #     if total_volume_db < -90:
+    #         noise_label = "The class is very Quiet 🔵"
+    #     elif -90 <= total_volume_db < -70:
+    #         noise_label = "The class is Quiet 🟢"
+    #     elif -70 <= total_volume_db < -60:
+    #         noise_label = "The class has Moderate Noise 🟡"
+    #     elif -60 <= total_volume_db < -50:
+    #         noise_label = "The class is Loud 🟠"
+    #     else:
+    #         noise_label = "The class is very Loud 🔴"
 
-        time_axis = np.linspace(0, len(audio) / samplerate, num=len(rms_values))
-        return time_axis, rms_db, zcr_values, total_volume_db, noise_label
+    #     time_axis = np.linspace(0, len(audio) / samplerate, num=len(rms_values))
+    #     return time_axis, rms_db, zcr_values, total_volume_db, noise_label
 
-    # Real-time loop
-    def real_time_analysis():
-        while True:
-            if stop_button:
-                break
-            audio_data = record_audio(DURATION, SAMPLERATE)
-            time_axis, rms_db_values, zcr_values, total_volume_db, noise_label = extract_features(audio_data, SAMPLERATE)
+    # # Real-time loop
+    # def real_time_analysis():
+    #     while True:
+    #         if stop_button:
+    #             break
+    #         audio_data = record_audio(DURATION, SAMPLERATE)
+    #         time_axis, rms_db_values, zcr_values, total_volume_db, noise_label = extract_features(audio_data, SAMPLERATE)
 
-            # Display total volume and noise level
-            volume_display.markdown(f"# **🔊 Total Volume(in dB): {total_volume_db:.2f} dB**")
-            noise_level_display.markdown(f"# **🔉 Noise Level: {noise_label}**")
+    #         # Display total volume and noise level
+    #         volume_display.markdown(f"# **🔊 Total Volume(in dB): {total_volume_db:.2f} dB**")
+    #         noise_level_display.markdown(f"# **🔉 Noise Level: {noise_label}**")
             
-            if rms_db_values is not None:
-                # Plot RMS Energy in dB
-                fig_rms, ax_rms = plt.subplots()
-                ax_rms.plot(time_axis, rms_db_values, label="RMS Energy (dB)", color='blue')
-                ax_rms.set_xlabel("Time (s)")
-                ax_rms.set_ylabel("RMS Energy (dB)", color='blue')
-                ax_rms.set_title("📊 RMS Energy in dB Over Time")
-                ax_rms.legend()
-                ax_rms.grid(True)
-                graph_area_rms.pyplot(fig_rms)
+    #         if rms_db_values is not None:
+    #             # Plot RMS Energy in dB
+    #             fig_rms, ax_rms = plt.subplots()
+    #             ax_rms.plot(time_axis, rms_db_values, label="RMS Energy (dB)", color='blue')
+    #             ax_rms.set_xlabel("Time (s)")
+    #             ax_rms.set_ylabel("RMS Energy (dB)", color='blue')
+    #             ax_rms.set_title("📊 RMS Energy in dB Over Time")
+    #             ax_rms.legend()
+    #             ax_rms.grid(True)
+    #             graph_area_rms.pyplot(fig_rms)
 
-                # Plot Zero Crossing Rate
-                fig_zcr, ax_zcr = plt.subplots()
-                ax_zcr.plot(time_axis, zcr_values, label="Zero Crossing Rate", color='red')
-                ax_zcr.set_xlabel("Time (s)")
-                ax_zcr.set_ylabel("Zero Crossing Rate", color='red')
-                ax_zcr.set_title("📊 Zero Crossing Rate Over Time")
-                ax_zcr.legend()
-                ax_zcr.grid(True)
-                graph_area_zcr.pyplot(fig_zcr)
+    #             # Plot Zero Crossing Rate
+    #             fig_zcr, ax_zcr = plt.subplots()
+    #             ax_zcr.plot(time_axis, zcr_values, label="Zero Crossing Rate", color='red')
+    #             ax_zcr.set_xlabel("Time (s)")
+    #             ax_zcr.set_ylabel("Zero Crossing Rate", color='red')
+    #             ax_zcr.set_title("📊 Zero Crossing Rate Over Time")
+    #             ax_zcr.legend()
+    #             ax_zcr.grid(True)
+    #             graph_area_zcr.pyplot(fig_zcr)
 
-                time.sleep(1)
+    #             time.sleep(1)
 
     # Start real-time processing if button is pressed
     if start_button:
