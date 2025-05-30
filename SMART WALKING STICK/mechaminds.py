@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import time
 import threading
 from queue import Queue
-from gsm_gps_module import A9GModule
+from a9g_module import A9GModule
 import os
 
 def is_raspberry_pi():
